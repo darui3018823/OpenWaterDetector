@@ -25,26 +25,30 @@ class OpenWaterDetectorClient : ClientModInitializer {
         if (hook == null) {
             trackedHook = null
             lastOpenWater = null
-            lastRainBonus = null
+            lastRainActive = null
+            lastRainBonusAvailable = null
             return
         }
 
         if (hook !== trackedHook) {
             trackedHook = hook
             lastOpenWater = null
-            lastRainBonus = null
+            lastRainActive = null
+            lastRainBonusAvailable = null
         }
 
         val accessor = hook as OpenWaterDetectorFishingHookAccessor
         val openWater = accessor.`openWaterDetector$calculateOpenWater`(hook.blockPosition())
-        val rainBonus = client.level!!.isRainingAt(hook.blockPosition().above())
+        val rainActive = client.level!!.isRaining
+        val rainBonusAvailable = client.level!!.isRainingAt(hook.blockPosition().above())
         if (openWater != lastOpenWater) {
             lastOpenWater = openWater
             sendStatus(client, openWater)
         }
-        if (rainBonus != lastRainBonus) {
-            lastRainBonus = rainBonus
-            sendRainStatus(client, rainBonus)
+        if (rainActive != lastRainActive || rainBonusAvailable != lastRainBonusAvailable) {
+            lastRainActive = rainActive
+            lastRainBonusAvailable = rainBonusAvailable
+            sendRainStatus(client, rainActive, rainBonusAvailable)
         }
     }
 
@@ -58,12 +62,17 @@ class OpenWaterDetectorClient : ClientModInitializer {
         client.player?.sendSystemMessage(message)
     }
 
-    private fun sendRainStatus(client: Minecraft, rainBonus: Boolean) {
-        val status = if (rainBonus) "Rain Bonus: Available" else "Rain Bonus: Unavailable"
-        val color = if (rainBonus) ChatFormatting.GREEN else ChatFormatting.GRAY
+    private fun sendRainStatus(client: Minecraft, rainActive: Boolean, rainBonusAvailable: Boolean) {
+        val rainStatus = if (rainActive) "Active" else "Inactive"
+        val rainColor = if (rainActive) ChatFormatting.GREEN else ChatFormatting.GRAY
+        val bonusStatus = if (rainBonusAvailable) "Available" else "Unavailable"
+        val bonusColor = if (rainBonusAvailable) ChatFormatting.GREEN else ChatFormatting.GRAY
         val message = Component.literal("[OWD] ")
             .withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA))
-            .append(Component.literal(status).withStyle(Style.EMPTY.withColor(color)))
+            .append(Component.literal("Rain: ").withStyle(Style.EMPTY.withColor(ChatFormatting.WHITE)))
+            .append(Component.literal(rainStatus).withStyle(Style.EMPTY.withColor(rainColor)))
+            .append(Component.literal(" | Bonus: ").withStyle(Style.EMPTY.withColor(ChatFormatting.WHITE)))
+            .append(Component.literal(bonusStatus).withStyle(Style.EMPTY.withColor(bonusColor)))
 
         client.player?.sendSystemMessage(message)
     }
@@ -71,5 +80,6 @@ class OpenWaterDetectorClient : ClientModInitializer {
     private var tickCounter = 0
     private var trackedHook: FishingHook? = null
     private var lastOpenWater: Boolean? = null
-    private var lastRainBonus: Boolean? = null
+    private var lastRainActive: Boolean? = null
+    private var lastRainBonusAvailable: Boolean? = null
 }

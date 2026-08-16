@@ -15,11 +15,12 @@ When a fishing bobber is present, the mod checks the vanilla Open Water state an
 ```text
 [OWD] Open Water
 [OWD] Not Open Water
-[OWD] Rain Bonus: Available
-[OWD] Rain Bonus: Unavailable
+[OWD] Rain: Active | Bonus: Available
+[OWD] Rain: Active | Bonus: Unavailable
+[OWD] Rain: Inactive | Bonus: Unavailable
 ```
 
-The rain-bonus check matches vanilla fishing: it uses whether it is raining at the block directly above the bobber.
+The rain status shows the world-wide weather state. The bonus status matches vanilla fishing and uses whether it is raining at the block directly above the bobber.
 
 ## Build
 
