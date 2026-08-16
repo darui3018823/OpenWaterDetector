@@ -32,7 +32,8 @@ class OpenWaterDetectorClient : ClientModInitializer {
             lastOpenWater = null
         }
 
-        val openWater = hook.isOpenWaterFishing
+        val accessor = hook as OpenWaterDetectorFishingHookAccessor
+        val openWater = accessor.`openWaterDetector$calculateOpenWater`(hook.blockPosition())
         if (openWater != lastOpenWater) {
             lastOpenWater = openWater
             sendStatus(client, openWater)
