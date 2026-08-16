@@ -6,6 +6,8 @@ Author: [darui3018823](https://github.com/darui3018823)
 
 Source: [github.com/darui3018823/OpenWaterDetector](https://github.com/darui3018823/OpenWaterDetector)
 
+License: BSD 2-Clause
+
 Install the built jar together with Fabric Loader 0.19.3+, Fabric API, and Fabric Language Kotlin 1.13.13+ in the client instance.
 
 When a fishing bobber is present, the mod checks the vanilla Open Water state and the vanilla rain-bonus condition every 5 ticks. It prints a chat message only when either state changes (or when a new bobber is cast):

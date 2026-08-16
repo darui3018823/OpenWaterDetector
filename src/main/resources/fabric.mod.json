@@ -10,7 +10,7 @@
   "contact": {
     "sources": "https://github.com/darui3018823/OpenWaterDetector"
   },
-  "license": "MIT",
+  "license": "BSD-2-Clause",
   "environment": "client",
   "entrypoints": {
     "client": [
