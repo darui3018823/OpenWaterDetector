@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.daruks.openwaterdetector",
+  "package": "com.daruks.openwaterdetector.mixin",
   "compatibilityLevel": "JAVA_25",
   "client": [
     "OpenWaterDetectorFishingHookAccessor"

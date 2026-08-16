@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import net.minecraft.ChatFormatting
 import net.minecraft.world.entity.projectile.FishingHook
+import com.daruks.openwaterdetector.mixin.OpenWaterDetectorFishingHookAccessor
 
 private const val CHECK_INTERVAL_TICKS = 5
 

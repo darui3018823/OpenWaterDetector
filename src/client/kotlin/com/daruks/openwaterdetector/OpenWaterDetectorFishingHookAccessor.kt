@@ -1,4 +1,4 @@
-package com.daruks.openwaterdetector
+package com.daruks.openwaterdetector.mixin
 
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.projectile.FishingHook
