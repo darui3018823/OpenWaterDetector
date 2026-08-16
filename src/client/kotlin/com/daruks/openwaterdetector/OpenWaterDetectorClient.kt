@@ -16,7 +16,7 @@ class OpenWaterDetectorClient : ClientModInitializer {
     }
 
     private fun onClientTick(client: Minecraft) {
-        if (client.level == null || client.player == null || client.tickCount % CHECK_INTERVAL_TICKS != 0) {
+        if (client.level == null || client.player == null || tickCounter++ % CHECK_INTERVAL_TICKS != 0) {
             return
         }
 
@@ -46,9 +46,10 @@ class OpenWaterDetectorClient : ClientModInitializer {
             .withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA))
             .append(Component.literal(status).withStyle(Style.EMPTY.withColor(color)))
 
-        client.player?.displayClientMessage(message, false)
+        client.player?.sendSystemMessage(message)
     }
 
+    private var tickCounter = 0
     private var trackedHook: FishingHook? = null
     private var lastOpenWater: Boolean? = null
 }
