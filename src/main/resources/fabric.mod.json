@@ -5,8 +5,11 @@
   "name": "Open Water Detector",
   "description": "Reports whether a fishing bobber currently satisfies Minecraft's vanilla Open Water fishing condition.",
   "authors": [
-    "daruks"
+    "darui3018823"
   ],
+  "contact": {
+    "sources": "https://github.com/darui3018823/OpenWaterDetector"
+  },
   "license": "MIT",
   "environment": "client",
   "entrypoints": {
