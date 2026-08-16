@@ -25,19 +25,26 @@ class OpenWaterDetectorClient : ClientModInitializer {
         if (hook == null) {
             trackedHook = null
             lastOpenWater = null
+            lastRainBonus = null
             return
         }
 
         if (hook !== trackedHook) {
             trackedHook = hook
             lastOpenWater = null
+            lastRainBonus = null
         }
 
         val accessor = hook as OpenWaterDetectorFishingHookAccessor
         val openWater = accessor.`openWaterDetector$calculateOpenWater`(hook.blockPosition())
+        val rainBonus = client.level!!.isRainingAt(hook.blockPosition().above())
         if (openWater != lastOpenWater) {
             lastOpenWater = openWater
             sendStatus(client, openWater)
+        }
+        if (rainBonus != lastRainBonus) {
+            lastRainBonus = rainBonus
+            sendRainStatus(client, rainBonus)
         }
     }
 
@@ -51,7 +58,18 @@ class OpenWaterDetectorClient : ClientModInitializer {
         client.player?.sendSystemMessage(message)
     }
 
+    private fun sendRainStatus(client: Minecraft, rainBonus: Boolean) {
+        val status = if (rainBonus) "Rain Bonus: Available" else "Rain Bonus: Unavailable"
+        val color = if (rainBonus) ChatFormatting.GREEN else ChatFormatting.GRAY
+        val message = Component.literal("[OWD] ")
+            .withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA))
+            .append(Component.literal(status).withStyle(Style.EMPTY.withColor(color)))
+
+        client.player?.sendSystemMessage(message)
+    }
+
     private var tickCounter = 0
     private var trackedHook: FishingHook? = null
     private var lastOpenWater: Boolean? = null
+    private var lastRainBonus: Boolean? = null
 }
